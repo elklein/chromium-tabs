@@ -14,46 +14,46 @@
 @end
 
 @interface CTBrowserWindowController : CTTabWindowController {
-	__weak CTBrowser* browser_; // we own the browser
+	__weak CTBrowser* browser_; // we DO NOT own the browser, the browser owns us
 	CTTabStripController *tabStripController_;
 	CTToolbarController *toolbarController_;
 @private
 	BOOL initializing_; // YES if the instance is initializing
-	
+
 	// The view that shows the presentation mode toggle when in Lion fullscreen
 	// mode.  Nil if not in fullscreen mode or not on Lion.
 	NSButton* presentationModeToggleButton_;
-	
+
 	// Tracks whether presentation mode was entered from fullscreen mode or
 	// directly from normal windowed mode.  Used to determine what to do when
 	// exiting presentation mode.
 	BOOL enteredPresentationModeFromFullscreen_;
-	
+
 	// True between -windowWillEnterFullScreen and -windowDidEnterFullScreen.
 	// Only used on Lion.
 	BOOL enteringFullscreen_;
-	
+
 	CTPresentationModeController* presentationModeController_;
-	
+
 	// Lazily created view which draws the background for the floating set of bars
 	// in presentation mode (for window types having a floating bar; it remains
 	// nil for those which don't).
 	NSView* floatingBarBackingView_;
-	
+
 	// The proportion of the floating bar which is shown (in presentation mode).
 	CGFloat floatingBarShownFraction_;
-	
+
 	// Various UI elements/events may want to ensure that the floating bar is
 	// visible (in presentation mode), e.g., because of where the mouse is or
 	// where keyboard focus is. Whenever an object requires bar visibility, it has
 	// itself added to |barVisibilityLocks_|. When it no longer requires bar
 	// visibility, it has itself removed.
 	NSMutableSet* barVisibilityLocks_;
-	
+
 	// Bar visibility locks and releases only result (when appropriate) in changes
 	// in visible state when the following is |YES|.
 	BOOL barVisibilityUpdatesEnabled_;
-	
+
 	BOOL shouldUsePresentationModeWhenEnteringFullscreen_;
 }
 
@@ -132,7 +132,7 @@
 // Whether to show the presentation mode toggle button in the UI.  Returns YES
 // if in fullscreen mode on Lion or later.  This method is safe to call on all
 // OS versions.
-// Subclasses can overwrite this to decide whether or not show presentation 
+// Subclasses can overwrite this to decide whether or not show presentation
 // mode toggle button.
 - (BOOL)shouldShowPresentationModeToggle;
 

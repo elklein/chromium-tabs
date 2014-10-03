@@ -1077,8 +1077,10 @@ const NSTimeInterval kAnimationDuration = 0.125;
 // animation.
 - (void)animationDidStopForController:(CTTabController*)controller
                              finished:(BOOL)finished {
-	[closingControllers_ removeObject:controller];
-	[self removeTab:controller];
+    if (controller) {
+        [closingControllers_ removeObject:controller];
+        [self removeTab:controller];
+    }
 }
 
 // Save off which CTTabController is closing and tell its view's animator

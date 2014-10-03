@@ -394,7 +394,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 // Accept tabs from a CTBrowserWindowController with the same Profile.
 - (BOOL)canReceiveFrom:(CTTabWindowController*)source {
-	if (![source isKindOfClass:[isa class]]) {
+	if (![source isKindOfClass:[[self class] class]]) {
 		return NO;
 	}
 	
@@ -507,7 +507,12 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		
 		// Before detaching the tab, store the pinned state.
 		BOOL isPinned = [tabStripModel isTabPinnedAtIndex:index];
-		
+
+        // It's possible that calling detachTabContentsAtIndex may destroy the old
+        // browser, so create a strong reference here (browser_ is weak) so that
+        // we can create a new browser afterwards.
+        CTBrowser* old_browser = browser_;
+
 		// Detach it from the source window, which just updates the model without
 		// deleting the tab contents. This needs to come before creating the new
 		// CTBrowser because it clears the CTTabContents' delegate, which gets hooked
@@ -516,7 +521,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		
 		// Create the new browser with a single tab in its model, the one being
 		// dragged.
-		CTBrowser* newBrowser = [browser_ createNewStripWithContents:contents];
+		CTBrowser* newBrowser = [old_browser createNewStripWithContents:contents];
 		CTBrowserWindowController* controller = [newBrowser windowController];
 		
 		// Set window frame
