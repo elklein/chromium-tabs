@@ -73,10 +73,7 @@ const CGFloat kXShadowCircleAlpha = 0.1;
 
 - (void)commonInit {
 	// Set accessibility description.
-	NSString* description = @"Close";
-	[[self cell]
-	 accessibilitySetOverrideValue:description
-	 forAttribute:NSAccessibilityDescriptionAttribute];
+	self.cell.accessibilityValueDescription = @"Close";
 }
 
 - (void)setUpDrawingPaths {

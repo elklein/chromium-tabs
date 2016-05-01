@@ -5,6 +5,12 @@
 #import "CTTabWindowController.h"
 #import "CTTabStripView.h"
 
+@interface NSView(PRIVATE)
+- (void)_addKnownSubview: (NSView *)subview;
+- (void)_addKnownSubview:(NSView *)aView positioned:(NSWindowOrderingMode)place relativeTo:(NSView *)otherView;
+@end
+
+
 @interface CTTabWindowController(PRIVATE)
 - (void)setUseOverlay:(BOOL)useOverlay;
 @end
@@ -66,7 +72,21 @@
 			   NSHeight([topTabStripView_ frame]));
 	[topTabStripView_ setFrame:tabFrame];
 	NSView* contentParent = [[[self window] contentView] superview];
-	[contentParent addSubview:topTabStripView_ positioned:NSWindowBelow relativeTo:nil];
+
+    if ([contentParent respondsToSelector: @selector(_addKnownSubview:positioned:relativeTo:)])
+    {
+        [contentParent _addKnownSubview:topTabStripView_
+                             positioned:NSWindowBelow
+                             relativeTo:nil];
+    }
+    else
+    {
+        [contentParent addSubview:topTabStripView_
+                       positioned:NSWindowBelow
+                       relativeTo:nil];
+    }
+    
+
 }
 
 - (void)windowDidLoad {

@@ -75,13 +75,13 @@ static BOOL gCanGetCornerRadius = NO;
 - (id)initWithFrame:(NSRect)frame {
 	// This class is not for instantiating.
 	[self doesNotRecognizeSelector:_cmd];
-	return nil;
+    return [super initWithFrame:frame];
 }
 
 - (id)initWithCoder:(NSCoder*)coder {
 	// This class is not for instantiating.
 	[self doesNotRecognizeSelector:_cmd];
-	return nil;
+    return [super initWithCoder:coder];
 }
 
 // Here is our custom drawing for our frame.

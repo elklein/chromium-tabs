@@ -442,8 +442,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		NSPoint tabOrigin = destinationFrame.origin;
 		tabOrigin = [[dragController tabStripView] convertPoint:tabOrigin
 														 toView:nil];
-		tabOrigin = [[view window] convertBaseToScreen:tabOrigin];
-		tabOrigin = [[self window] convertScreenToBase:tabOrigin];
+		tabOrigin = [[view window] convertRectToScreen:NSMakeRect(tabOrigin.x, tabOrigin.y, 1, 1)].origin;
+		tabOrigin = [[self window] convertRectFromScreen:NSMakeRect(tabOrigin.x, tabOrigin.y, 1, 1)].origin;
 		tabOrigin = [[self tabStripView] convertPoint:tabOrigin fromView:nil];
 		destinationFrame.origin = tabOrigin;
 		

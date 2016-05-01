@@ -417,10 +417,8 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		}
 		
 		// Set accessibility descriptions. http://openradar.appspot.com/7496255
-		[[newTabButton_ cell]
-		 accessibilitySetOverrideValue:@"New tab"
-		 forAttribute:NSAccessibilityDescriptionAttribute];
-		
+		[newTabButton_ cell].accessibilityValueDescription = @"New tab";
+
 		// Controller may have been (re-)created by switching layout modes, which
 		// means the tab model is already fully formed with tabs. Need to walk the
 		// list and create the UI for each.
@@ -1350,8 +1348,8 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	}
 	
 	if (hoveredTab_ != tabView) {
-		[hoveredTab_ mouseExited:nil];  // We don't pass event because moved events
-		[tabView mouseEntered:nil];  // don't have valid tracking areas
+		[hoveredTab_ mouseExited:event];  // We don't pass event because moved events
+		[tabView mouseEntered:event];  // don't have valid tracking areas
 		hoveredTab_ = tabView;
 	} else {
 		[hoveredTab_ mouseMoved:event];
