@@ -221,7 +221,7 @@ const NSTimeInterval kTearDuration = 0.333;
 			[[target window] orderFront:self];
 			NSRect tabStripFrame = [[target tabStripView] frame];
 			tabStripFrame.origin = [[target window]
-									convertRectToScreen:tabStripFrame].origin;
+                                    convertRectToScreen:tabStripFrame].origin;
 			if (NSPointInRect(thisPoint, tabStripFrame)) {
 				newTarget = target;
 			}
@@ -350,9 +350,9 @@ const NSTimeInterval kTearDuration = 0.333;
 		// destination tab strip.
 		CTTabView* draggedTabView = (CTTabView*)[draggedController_ activeTabView];
 		NSRect tabFrame = [draggedTabView frame];
-		tabFrame.origin = [dragWindow_ convertRectToScreen:NSMakeRect(origin.x, origin.y, 1, 1)].origin;
-		tabFrame.origin = [[targetController_ window]
-						   convertRectFromScreen:NSMakeRect(tabFrame.origin.x, tabFrame.origin.y, 1, 1)].origin;
+        tabFrame.origin = [dragWindow_ convertRectToScreen:tabFrame].origin;
+        tabFrame.origin = [[targetController_ window]
+                           convertRectFromScreen:NSMakeRect(tabFrame.origin.x, tabFrame.origin.y, 1, 1)].origin;
 		tabFrame = [[targetController_ tabStripView]
 					convertRect:tabFrame fromView:nil];
 		[targetController_ insertPlaceholderForTab:[draggedTab_ tabView]
